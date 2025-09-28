@@ -1,0 +1,5 @@
+.card { background: #fff; border-radius: 8px; border: 1px solid var(--card-border); padding: 12px; margin-bottom: 12px; }
+.btn { background: var(--primary); color: white; padding: 8px 12px; border-radius: 8px; border: none; cursor:pointer; }
+.btn.secondary { background: var(--accent); }
+.muted { color: var(--muted); font-size: 13px; }
+.header-title { color: var(--primary); margin:0; }

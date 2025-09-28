@@ -1,0 +1,18 @@
+:root{
+  --primary: #1E3A8A; /* primary blue */
+  --accent: #3B82F6;
+  --success: #22C55E;
+  --muted: #6B7280;
+  --card-border: #E5E7EB;
+  --bg: #f8fafc;
+}
+*{box-sizing:border-box}
+body{
+  font-family: Inter, Arial, sans-serif;
+  margin:0;
+  background:var(--bg);
+  color:#111827;
+}
+a{color:inherit;text-decoration:none}
+input, textarea, select { padding:8px; border-radius:6px; border:1px solid #ddd; font-family:inherit;}
+button{font-family:inherit}
