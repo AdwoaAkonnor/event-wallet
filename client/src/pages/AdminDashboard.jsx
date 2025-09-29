@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react"
 
+const API_BASE = "http://localhost:4000"   // ✅ Centralized API URL
+
 export default function AdminDashboard() {
   const [title, setTitle] = useState("")
   const [date, setDate] = useState("")
   const [time, setTime] = useState("")
-  const [department, setDepartment] = useState("COMSSA")
+  const [department, setDepartment] = useState("COMPSSA")
   const [outline, setOutline] = useState("")
   const [free, setFree] = useState(false)
   const [ticketType, setTicketType] = useState("Single")
   const [price, setPrice] = useState("")
-  const [groups, setGroups] = useState({ COMSSA: [], UGASS: [], ESUG: [] })
+  const [groups, setGroups] = useState({ COMPSSA: [], UGASS: [], ESUG: [] })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
@@ -17,9 +19,9 @@ export default function AdminDashboard() {
     setLoading(true)
     setError(null)
     try {
-      const res = await fetch("/api/events")
+      const res = await fetch(`${API_BASE}/api/events`)
       const list = await res.json()
-      const out = { COMSSA: [], UGASS: [], ESUG: [] }
+      const out = { COMPSSA: [], UGASS: [], ESUG: [] }
       list.forEach(ev => {
         if (out[ev.department]) out[ev.department].push(ev)
       })
@@ -27,7 +29,7 @@ export default function AdminDashboard() {
     } catch (err) {
       console.error("Error loading events:", err)
       setError("Could not load events. Server may be down.")
-      setGroups({ COMSSA: [], UGASS: [], ESUG: [] })
+      setGroups({ COMPSSA: [], UGASS: [], ESUG: [] })
     } finally {
       setLoading(false)
     }
@@ -49,7 +51,7 @@ export default function AdminDashboard() {
     }
 
     try {
-      await fetch("/api/events", {
+      await fetch(`${API_BASE}/api/events`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -72,7 +74,7 @@ export default function AdminDashboard() {
   async function remove(id) {
     if (!confirm("Delete event?")) return
     try {
-      await fetch("/api/events/" + id, {
+      await fetch(`${API_BASE}/api/events/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ key: "ADMIN2025" }),
@@ -113,7 +115,7 @@ export default function AdminDashboard() {
           onChange={e => setDepartment(e.target.value)}
           style={{ marginTop: 8 }}
         >
-          <option>COMSSA</option>
+          <option>COMPSSA</option>
           <option>UGASS</option>
           <option>ESUG</option>
         </select>

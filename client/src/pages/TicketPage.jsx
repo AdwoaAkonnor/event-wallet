@@ -1,8 +1,7 @@
 // src/pages/TicketPage.jsx
-
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { QRCodeCanvas } from 'qrcode.react'   // ✅ Correct import
+import { QRCodeCanvas } from 'qrcode.react'
 
 export default function TicketPage() {
   const location = useLocation()
@@ -16,7 +15,7 @@ export default function TicketPage() {
         <h3>No ticket data available</h3>
         <p>
           If you refreshed the page, the demo does not persist ticket display.
-          Go back and get ticket again (or run backend so tickets persist).
+          Go back and get the ticket again (or run backend so tickets persist).
         </p>
         <button className="btn" onClick={() => navigate('/')}>
           Home
@@ -26,39 +25,103 @@ export default function TicketPage() {
   }
 
   return (
-    <div style={{ textAlign: 'center', padding: '20px' }}>
-      <h2>✅ Payment Verified</h2>
+    <div
+      style={{
+        textAlign: 'center',
+        padding: '30px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+      }}
+    >
+      <h2 style={{ color: 'var(--primary)', marginBottom: 20 }}>
+        ✅ Ticket Confirmed
+      </h2>
+
       <div
-        className="card"
+        className="ticket-card"
         style={{
-          display: 'inline-block',
-          textAlign: 'left',
-          padding: '16px',
-          border: '1px solid var(--card-border)',
-          borderRadius: '8px',
           backgroundColor: '#fff',
+          borderRadius: '16px',
+          boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
+          padding: '24px',
+          maxWidth: '400px',
+          width: '100%',
+          textAlign: 'center',
+          border: '1px dashed #999'
         }}
       >
-        <div style={{ fontWeight: 700 }}>{ticket.eventTitle}</div>
-        <div className="muted">
+        {/* Event Title */}
+        <h3 style={{ fontSize: '20px', fontWeight: '700', marginBottom: '8px' }}>
+          {ticket.eventTitle}
+        </h3>
+
+        {/* Department & Type */}
+        <p className="muted" style={{ margin: 0 }}>
           {ticket.department} • {ticket.ticketType}
+        </p>
+
+        {/* Ticket Code */}
+        <div
+          style={{
+            marginTop: 12,
+            fontWeight: 700,
+            fontSize: '18px',
+            letterSpacing: '1px'
+          }}
+        >
+          {ticket.ticketCode}
         </div>
-        <div style={{ marginTop: 8, fontWeight: 700 }}>{ticket.ticketCode}</div>
-        <div style={{ marginTop: 12, textAlign: 'center' }}>
+
+        {/* QR Code */}
+        <div style={{ marginTop: 20, marginBottom: 16 }}>
           {qr ? (
-            <img src={qr} alt="QR" style={{ width: 160, height: 160 }} />
+            <img
+              src={qr}
+              alt="QR"
+              style={{
+                width: 180,
+                height: 180,
+                borderRadius: 12,
+                border: '4px solid var(--primary)'
+              }}
+            />
           ) : (
-            <QRCodeCanvas value={ticket.ticketCode || 'NO-CODE'} size={160} />
+            <QRCodeCanvas
+              value={ticket.ticketCode || 'NO-CODE'}
+              size={180}
+              bgColor="#ffffff"
+              fgColor="#000000"
+              includeMargin={true}
+              style={{ borderRadius: 12, border: '4px solid var(--primary)' }}
+            />
           )}
         </div>
-        <div style={{ marginTop: 12 }}>
-          <button className="btn" onClick={() => window.print()}>
-            Download / Print
+
+        {/* Event Details */}
+        <div style={{ fontSize: '14px', marginTop: 8 }}>
+          <div>
+            <strong>Date:</strong> {ticket.date || 'TBA'}
+          </div>
+          <div>
+            <strong>Type:</strong> {ticket.ticketType}
+          </div>
+        </div>
+
+        {/* Download/Print Button */}
+        <div style={{ marginTop: 20 }}>
+          <button
+            className="btn"
+            onClick={() => window.print()}
+            style={{ width: '100%' }}
+          >
+            🧾 Download / Print Ticket
           </button>
         </div>
       </div>
-      <p style={{ marginTop: 12 }}>
-        Please take a screenshot of this ticket for entry.
+
+      <p style={{ marginTop: 16, fontSize: '14px', color: '#444' }}>
+        Please screenshot or print this ticket to show at the event entrance.
       </p>
     </div>
   )

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "evt-1",
+    "title": "COMPSSA Dinner",
+    "department": "COMPSSA",
+    "date": "2025-10-07",
+    "time": "18:00",
+    "outline": "Annual dinner with awards",
+    "free": false,
+    "ticketOptions": [{"type":"Single","price":50},{"type":"Double","price":80}]
+  },
+  {
+    "id": "evt-2",
+    "title": "UGASS Seminar",
+    "department": "UGASS",
+    "date": "2025-11-14",
+    "time": "10:00",
+    "outline": "Leadership & research methods",
+    "free": true,
+    "ticketOptions": []
+  },
+  {
+    "id": "evt-3",
+    "title": "ESUG Expo",
+    "department": "ESUG",
+    "date": "2025-12-02",
+    "time": "09:00",
+    "outline": "Engineering projects showcase",
+    "free": false,
+    "ticketOptions": [{"type":"General","price":20}]
+  }
+]

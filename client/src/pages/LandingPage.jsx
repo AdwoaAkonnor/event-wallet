@@ -7,15 +7,8 @@ export default function LandingPage() {
   return (
     <div style={{ textAlign: 'center', paddingTop: 40 }}>
       <h2 style={{ color: 'var(--primary)' }}>Select Your Department</h2>
-      <div
-        style={{
-          display: 'flex',
-          gap: 20,
-          justifyContent: 'center',
-          marginTop: 20,
-        }}
-      >
-        <button className="btn" onClick={() => nav('/department/COMSSA')}>COMSSA</button>
+      <div style={{ display: 'flex', gap: 20, justifyContent: 'center', marginTop: 20 }}>
+        <button className="btn" onClick={() => nav('/department/COMPSSA')}>COMPSSA</button>
         <button className="btn" onClick={() => nav('/department/UGASS')}>UGASS</button>
         <button className="btn" onClick={() => nav('/department/ESUG')}>ESUG</button>
       </div>

@@ -1,50 +1,51 @@
+// src/pages/DepartmentPage.jsx
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import EventCard from '../components/EventCard'
-import { fetchEvents } from '../utils/api'
+
+const API_BASE = 'http://localhost:4000'
 
 export default function DepartmentPage() {
   const { deptName } = useParams()
-  const navigate = useNavigate()
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    setLoading(true)
-    setError(null)
-    fetchEvents(deptName)
-      .then(data => {
-        setEvents(data)
-        setLoading(false)
-      })
-      .catch(err => {
-        console.error('Error fetching events:', err)
-        setEvents([])
-        setError('Could not load events. Please try again later.')
-        setLoading(false)
-      })
+    async function fetchEvents() {
+      const res = await fetch(`${API_BASE}/api/events`)
+      const list = await res.json()
+      const filtered = list.filter(
+        ev => ev.department.toLowerCase() === deptName.toLowerCase()
+      )
+      setEvents(filtered)
+      setLoading(false)
+    }
+    fetchEvents()
   }, [deptName])
 
+  if (loading) return <p>Loading events...</p>
+
   return (
-    <div style={{ padding: '20px' }}>
+    <div>
       <h2 style={{ color: 'var(--primary)' }}>{deptName} Events</h2>
-
-      {loading && <p className="muted">Loading events...</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-
-      {!loading && events.length === 0 && (
-        <p className="muted">No events for {deptName}.</p>
+      {events.length === 0 ? (
+        <p>No events yet for this department.</p>
+      ) : (
+        events.map(ev => (
+          <div key={ev.id} className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+            <div>
+              <div style={{ fontWeight: 700 }}>{ev.title}</div>
+              <div className="muted">{ev.date} {ev.time && '• ' + ev.time}</div>
+              <div className="muted">
+                {ev.free ? 'FREE' : `GHS ${ev.ticketOptions?.[0]?.price ?? ''}`}
+              </div>
+            </div>
+            <button className="btn" onClick={() => navigate(`/event/${ev.id}`)}>
+              View Details
+            </button>
+          </div>
+        ))
       )}
-
-      {events.map(ev => (
-        <EventCard
-          key={ev.id}
-          ev={ev}
-          onView={() => navigate(`/event/${encodeURIComponent(ev.id)}`)}
-          onPay={() => navigate(`/pay/${encodeURIComponent(ev.id)}`)}
-        />
-      ))}
     </div>
   )
 }

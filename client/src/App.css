@@ -3,3 +3,10 @@
 .btn.secondary { background: var(--accent); }
 .muted { color: var(--muted); font-size: 13px; }
 .header-title { color: var(--primary); margin:0; }
+.ticket-card {
+  transition: transform 0.3s ease;
+}
+
+.ticket-card:hover {
+  transform: translateY(-4px);
+}
